@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Level Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: #333;
+        }
+        .container {
+            background: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .question {
+            font-size: 1.3em;
+            margin-bottom: 20px;
+        }
+        .counter {
+            font-size: 1em;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .options label {
+            margin: 8px 0;
+            font-size: 1.1em;
+            cursor: pointer;
+            width: 80%;
+            background: #f7f9fc;
+            border: 1px solid #dfe3e8;
+            padding: 10px 15px;
+            border-radius: 6px;
+            transition: background 0.3s;
+        }
+        .options label:hover {
+            background: #e3f2fd;
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #result h2 {
+            font-size: 1.5em;
+            color: #007bff;
+        }
+        #score {
+            font-size: 1.2em;
+            margin-top: 15px;
+        }
+        #contact {
+            margin-top: 20px;
+            font-size: 1em;
+            color: #555;
+        }
+        #whatsapp-button {
+            background-color: #25D366;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 15px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        #whatsapp-button:hover {
+            background-color: #1DA851;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="quiz-container">
+            <div id="counter" class="counter">Question 1/64</div>
+            <div id="question" class="question">Question will appear here.</div>
+            <div id="options" class="options"></div>
+            <button id="next-button">Next</button>
+        </div>
+        <div id="result" style="display: none;">
+            <h2>Your Level</h2>
+            <p id="score"></p>
+            <p id="contact">Envíele este resultado al dueño de esta página: Jose Valderramos Alvarado, CEO</p>
+            <a id="whatsapp-button" href="#" target="_blank">Enviar por WhatsApp</a>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            // A1 Questions
+            { question: "This is my friend. _______ name is Sarah.", options: ["Her", "His", "Your", "Their"], correct: 0 },
+            { question: "I usually _______ to work at 8 a.m.", options: ["go", "goes", "going", "gone"], correct: 0 },
+            { question: "They _______ dinner right now.", options: ["have", "are having", "having", "had"], correct: 1 },
+            { question: "She _______ to the gym every week.", options: ["go", "goes", "gone", "going"], correct: 1 },
+            { question: "We _______ a great time at the party yesterday.", options: ["had", "have", "has", "having"], correct: 0 },
+            { question: "I _______ TV when she called.", options: ["was watching", "watched", "am watching", "watch"], correct: 0 },
+            { question: "He _______ English for two years.", options: ["studies", "studied", "has studied", "is studying"], correct: 2 },
+            { question: "We _______ our homework before dinner.", options: ["finish", "finished", "have finished", "finishing"], correct: 1 },
+            { question: "She _______ to New York last month.", options: ["travels", "travelled", "is travelling", "travel"], correct: 1 },
+            { question: "They _______ to the park every Sunday.", options: ["go", "goes", "went", "are going"], correct: 0 },
+            { question: "What time _______ you wake up yesterday?", options: ["did", "do", "does", "doing"], correct: 0 },
+            { question: "She _______ coffee every morning.", options: ["drinks", "drink", "drank", "drunk"], correct: 0 },
+            { question: "They _______ in London for a year.", options: ["live", "lived", "living", "are living"], correct: 1 },
+            { question: "We _______ to school together.", options: ["walk", "walked", "walking", "are walking"], correct: 0 },
+            { question: "He _______ the bus every day.", options: ["takes", "take", "took", "taking"], correct: 0 },
+            { question: "I _______ hungry. Let's eat.", options: ["am", "is", "was", "were"], correct: 0 },
+            { question: "She _______ to the store this morning.", options: ["went", "goes", "go", "going"], correct: 0 },
+            { question: "What _______ you doing right now?", options: ["are", "is", "do", "does"], correct: 0 },
+            { question: "We _______ a movie last night.", options: ["watched", "watch", "are watching", "watches"], correct: 0 },
+            { question: "Where _______ you live?", options: ["do", "are", "did", "will"], correct: 0 },
+
+            // A2 Questions
+            { question: "She _______ her homework already.", options: ["finished", "has finished", "finishing", "finish"], correct: 1 },
+            { question: "I _______ in Spain for five years.", options: ["live", "have lived", "lived", "living"], correct: 2 },
+            { question: "You should _______ to the doctor.", options: ["go", "going", "to go", "gone"], correct: 0 },
+            { question: "We _______ dinner at a nice restaurant yesterday.", options: ["have", "had", "are having", "have had"], correct: 1 },
+            { question: "She _______ her keys, so she can't open the door.", options: ["lost", "has lost", "losing", "lose"], correct: 1 },
+            { question: "He _______ me he would call later.", options: ["tells", "told", "telling", "has told"], correct: 1 },
+            { question: "I _______ to the supermarket every Saturday.", options: ["go", "goes", "gone", "going"], correct: 0 },
+            { question: "They _______ the project by next week.", options: ["will finish", "finished", "have finished", "finishing"], correct: 0 },
+            { question: "If I _______ a car, I would travel more.", options: ["have", "had", "having", "has"], correct: 1 },
+            { question: "She _______ late because of the traffic.", options: ["was", "is", "has been", "were"], correct: 0 },
+            { question: "We _______ at home all weekend.", options: ["stay", "stayed", "staying", "have stayed"], correct: 1 },
+            { question: "He _______ football every Saturday.", options: ["plays", "play", "played", "playing"], correct: 0 },
+            { question: "I _______ to learn a new language this year.", options: ["want", "wants", "wanted", "wanting"], correct: 0 },
+            { question: "She _______ for the train when it started to rain.", options: ["waited", "waiting", "was waiting", "wait"], correct: 2 },
+            { question: "They _______ at the park when the storm began.", options: ["are", "were", "was", "been"], correct: 1 },
+            { question: "We _______ the homework together.", options: ["do", "did", "done", "doing"], correct: 1 },
+            { question: "He has been _______ for an hour.", options: ["waiting", "wait", "waits", "waited"], correct: 0 },
+            { question: "We _______ the movie yesterday.", options: ["saw", "see", "seen", "seeing"], correct: 0 },
+            { question: "If I _______ rich, I would buy a house.", options: ["was", "am", "were", "be"], correct: 2 },
+            { question: "They _______ dinner at the restaurant.", options: ["had", "have", "having", "has"], correct: 0 },
+
+            // B1 Questions
+            { question: "If I _______ more time, I would learn Spanish.", options: ["have", "had", "will have", "having"], correct: 1 },
+            { question: "She _______ to Paris many times before.", options: ["has been", "was", "is", "has gone"], correct: 0 },
+            { question: "We were late because we _______ the bus.", options: ["missed", "have missed", "missing", "miss"], correct: 0 },
+            { question: "If he _______ harder, he would pass the exam.", options: ["studies", "study", "studied", "studying"], correct: 2 },
+            { question: "I _______ the book before I saw the movie.", options: ["read", "have read", "had read", "reading"], correct: 2 },
+            { question: "He said he _______ to the party.", options: ["comes", "will come", "coming", "would come"], correct: 3 },
+            { question: "She _______ the report by the time you arrive.", options: ["will finish", "will have finished", "finished", "finishing"], correct: 1 },
+            { question: "They _______ their flight because of the weather.", options: ["cancel", "cancelled", "were cancelling", "cancelling"], correct: 1 },
+            { question: "If I _______ rich, I would travel the world.", options: ["am", "was", "were", "being"], correct: 2 },
+            { question: "She _______ the piano since she was a child.", options: ["plays", "has played", "is playing", "played"], correct: 1 },
+            { question: "We _______ for hours before they arrived.", options: ["waited", "have waited", "had waited", "waiting"], correct: 2 },
+            { question: "If I _______ you, I wouldn't do that.", options: ["am", "was", "were", "being"], correct: 2 },
+            { question: "He _______ the meeting when the fire alarm rang.", options: ["attended", "was attending", "attend", "attends"], correct: 1 },
+            { question: "We _______ to Italy next summer.", options: ["go", "going", "are going", "went"], correct: 2 },
+            { question: "She _______ a lot of work recently.", options: ["did", "does", "has done", "doing"], correct: 2 },
+            { question: "I _______ this movie already.", options: ["saw", "have seen", "see", "seeing"], correct: 1 },
+            { question: "If they _______ here, we would start the meeting.", options: ["are", "were", "been", "being"], correct: 1 },
+            { question: "He _______ the train before it started to rain.", options: ["caught", "catch", "catches", "catching"], correct: 0 },
+            { question: "She _______ her homework before going out.", options: ["did", "does", "has done", "done"], correct: 0 },
+            { question: "We _______ our bags before they called us.", options: ["packed", "pack", "packing", "have packed"], correct: 0 }
+        ];
+
+        let currentQuestion = 0;
+    let score = 0;
+    const questionEl = document.getElementById("question");
+    const optionsEl = document.getElementById("options");
+    const nextButton = document.getElementById("next-button");
+    const resultEl = document.getElementById("result");
+    const scoreEl = document.getElementById("score");
+    const counterEl = document.getElementById("counter");
+    const whatsappButton = document.getElementById("whatsapp-button");
+
+    // Verificar si el test ya fue completado usando localStorage
+    if (localStorage.getItem("testAttempted")) {
+        document.body.innerHTML = `
+            <div class="container">
+                <h2>You have already completed the test!</h2>
+                <p>Only one attempt is allowed.</p>
+            </div>
+        `;
+        // Bloquear cualquier interacción con el test
+        throw new Error("Test already completed.");
+    }
+
+    function loadQuestion() {
+        const current = questions[currentQuestion];
+        questionEl.textContent = current.question;
+        optionsEl.innerHTML = "";
+        counterEl.textContent = `Question ${currentQuestion + 1}/${questions.length}`;
+
+        current.options.forEach((option, index) => {
+            const optionEl = document.createElement("label");
+            optionEl.innerHTML = `
+                <input type="radio" name="option" value="${index}" style="margin-right: 10px;">
+                ${option}
+            `;
+            optionsEl.appendChild(optionEl);
+        });
+    }
+
+    function showResult() {
+        // Marcar el test como intentado en localStorage
+        localStorage.setItem("testAttempted", "true");
+
+        document.getElementById("quiz-container").style.display = "none";
+        resultEl.style.display = "block";
+
+        const level =
+            score <= 20 ? "A1 (Beginner)" :
+            score <= 40 ? "A2 (Elementary)" :
+            "B1 (Intermediate)";
+
+        scoreEl.textContent = `You scored ${score}/${questions.length}. Your level is ${level}.`;
+
+        const whatsappMessage = `https://wa.me/73001016?text=He%20completado%20el%20test%20de%20nivel%20de%20ingl%C3%A9s.%20Mi%20puntaje%20es%20${score}%20de%20${questions.length}%20y%20mi%20nivel%20es%20${level}.`;
+        whatsappButton.href = whatsappMessage;
+    }
+
+    nextButton.addEventListener("click", () => {
+        const selectedOption = document.querySelector("input[name='option']:checked");
+        if (!selectedOption) {
+            alert("Please select an answer.");
+            return;
+        }
+
+        const answer = parseInt(selectedOption.value);
+        if (answer === questions[currentQuestion].correct) {
+            score++;
+        }
+
+        currentQuestion++;
+
+        if (currentQuestion < questions.length) {
+            loadQuestion();
+        } else {
+            showResult();
+        }
+    });
+
+    loadQuestion();
+    
+    </script>
+</body>
+</html>
